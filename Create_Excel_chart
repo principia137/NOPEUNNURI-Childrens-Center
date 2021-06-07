@@ -27,6 +27,7 @@ Sub 차트생성()
             .ChartType = xlColumnClustered '차트 종류는 누적 세로막대그래프
             .HasTitle = True '차트 제목 추가
             .ChartTitle.Text = sht.Range("$B" & i & "") '차트 제목 범위
+            
             With .ChartArea '차트 생성 위치 지정
                 .left = 400
                 .top = top
