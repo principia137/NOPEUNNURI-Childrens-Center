@@ -1,0 +1,33 @@
+Sub 차트생성()
+'
+' 차트생성 매크로
+'
+' 바로 가기 키: Ctrl+g
+'
+   
+    Dim fp As Workbook
+    Dim sht As Worksheet
+    Dim cht As Chart
+    Dim data As Range
+    Dim i As Integer
+    Dim top As Integer
+    
+    Set fp = ThisWorkbook
+    Set sht = fp.Sheets("수학 평가표 및 그래프")
+    
+    For i = 4 To 22 Step 3 '3행씩 건너뛰며 차트 생성
+        Set cht = sht.Shapes.AddChart2.Chart '차트 생성
+        Set data = sht.Range("$C" & i & ":$F" & i + 2 & "") '범위 지정
+        With cht
+            .SetSourceData Source:=data '차트 범위 할당
+            .ChartType = xlColumnClustered '누적 세로막대형 그래프
+            .HasTitle = True '제목 지정
+            .ChartTitle.Text = sht.Range("$B" & i & "") '제목 범위
+            With .ChartArea '차트 생성 위치 설정
+                .left = 500 
+                .top = top
+                End With
+            End With
+        top = i * 80 '차트 생성마다 300씩 횡으로 증가
+        Next i
+End Sub
