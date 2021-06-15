@@ -6,7 +6,8 @@ Sub 차트생성()
 '
    '변수선언
     Dim fp As Workbook
-    Dim sht As Worksheet
+    Dim sht1 As Worksheet
+    Dim sht2 As Worksheet
     Dim cht As Chart
     Dim data As Range
     Dim i As Integer
@@ -14,24 +15,32 @@ Sub 차트생성()
     
     '개체 변수 값 할당
     Set fp = ThisWorkbook
-    Set sht = fp.Sheets("영어 평가표 및 그래프")
+    Set sht1 = fp.Sheets("개인별 그래프")
+    Set sht2 = fp.Sheets("종합결과표")
     
-    For i = 3 To 18 Step 1 '3행부터 18행 까지 반복
-        top = i * 230 '차트 생성마다 230씩 횡으로 증가
-        Set cht = sht.Shapes.AddChart2.Chart '차트 생성
-        Set data = Union(sht.Range("$C" & i & ""), sht.Range("$C$2")) '다중 범위 지정
-        'Set data = sht.Range("$C" & i & ":$E" & i & "")'단일 범위 지정
+    For i = 4 To 31 Step 3
+        top = i * 16.2 * 5 '차트 생성마다 230씩 횡으로 증가
+        Set cht = sht1.Shapes.AddChart2.Chart '차트 생성
+        'Set data = Union(sht.Range("$C" & i & ""), sht.Range("$C$2")) '다중 범위 지정
+        Set data = sht2.Range("$d" & i & ":$E" & i + 2 & "") '단일 범위 지정
         
         With cht
             .SetSourceData Source:=data '범위 할당
             .ChartType = xlColumnClustered '차트 종류는 누적 세로막대그래프
             .HasTitle = True '차트 제목 추가
-            .ChartTitle.Text = sht.Range("$B" & i & "") '차트 제목 범위 지정
+            .ChartTitle.Text = sht2.Range("$c" & i & "") '차트 제목 범위 지정
             
             With .ChartArea '차트 생성 위치 지정
-                .left = 400
+                .Left = 16.8
                 .top = top
                 End With
+            
+            With .Axes(xlValue, xlPrimary) '축범위 설정
+                .MinimumScale = 0 '최솟값
+                .MaximumScale = 60 '최댓값
+                .MajorUnit = 5 '주 눈금선
+                End With
+                
             End With
         Next i
 End Sub
