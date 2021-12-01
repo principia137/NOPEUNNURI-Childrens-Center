@@ -1,0 +1,15 @@
+Sub data()
+    Dim fp As Workbook
+    Dim sht1 As Worksheet
+    Dim sht2 As Worksheet
+    Dim a As String
+    Set fp = ThisWorkbook
+    Set sht1 = fp.Sheets("전체통계")
+    
+    For i = 4 To 44 Step 2
+        a = sht1.Cells(i, 3)
+        Debug.Print (a)
+        Set sht2 = fp.Sheets(a)
+        sht1.Range("f" & i & ":g" & i + 1 & "") = sht2.Range("i4:j5").Value
+        Next i
+End Sub
