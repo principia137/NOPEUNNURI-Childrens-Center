@@ -4,30 +4,37 @@ Sub 차트생성()
 '
 ' 바로 가기 키: Ctrl+g
 '
-   
     Dim fp As Workbook
-    Dim sht As Worksheet
+    Dim sht1 As Worksheet
+    Dim sht2 As Worksheet
     Dim cht As Chart
     Dim data As Range
     Dim i As Integer
     Dim top As Integer
     
     Set fp = ThisWorkbook
-    Set sht = fp.Sheets("수학 평가표 및 그래프")
+    Set sht1 = fp.Sheets("전체통계")
+    Set sht2 = fp.Sheets("개인별 그래프")
     
-    For i = 4 To 22 Step 3 '3행씩 건너뛰며 차트 생성
-        Set cht = sht.Shapes.AddChart2.Chart '차트 생성
-        Set data = sht.Range("$C" & i & ":$F" & i + 2 & "") '범위 지정
+    For i = 4 To 44 Step 2
+        Set cht = sht2.Shapes.AddChart2.Chart '차트 생성
+        Set data = Union(sht1.Range("$e" & i & ":$e" & i + 1 & ""), sht1.Range("$i" & i & ":$i" & i + 1 & "")) '다중범위 지정
+        'Set data = sht1.Range("$e" & i & ":$h" & i + 1 & "") '범위 지정
         With cht
             .SetSourceData Source:=data '차트 범위 할당
             .ChartType = xlColumnClustered '누적 세로막대형 그래프
             .HasTitle = True '제목 지정
-            .ChartTitle.Text = sht.Range("$B" & i & "") '제목 범위
+            .HasLegend = True
+            .ChartTitle.Text = "사전사후 총점비교 (" & sht1.Range("$c" & i & "") & ")" '제목 내용
             With .ChartArea '차트 생성 위치 설정
-                .left = 500 
+                .Left = 600
                 .top = top
                 End With
+            With .Axes(xlValue) '축범위 설정
+                .MinimumScale = 0
+                .MaximumScale = 100
+                End With
             End With
-        top = i * 80 '차트 생성마다 300씩 횡으로 증가
+        top = i * 120 '차트 생성마다 top값 만큼씩 횡으로 증가
         Next i
 End Sub
