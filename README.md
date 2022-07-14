@@ -50,6 +50,6 @@ Visual Basic for Application(VBA) 언어로 작성되었습니다.
 단순반복업무시 생기는 오류를 줄일 수 있습니다.<br/>  
 
     
-참고자료    
+### 참고자료    
 [1] https://bookdown.org/cardiomoon/webrbook2020/       
 [2] https://ko.surveymonkey.com/mp/how-to-analyze-survey-data/
